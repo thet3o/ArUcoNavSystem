@@ -15,6 +15,7 @@ import glob
 from tqdm import tqdm
 
 def calibrate_camera(rows, cols, criteria = (cv2.TERM_CRITERIA_EPS+ cv2.TERM_CRITERIA_MAX_ITER, 30, 0.001)):
+    count = 0
     # Object point preparation
     objpnt = np.zeros((rows*cols, 3), np.float32)
     objpnt[:, :2] = np.mgrid[0:cols, 0:rows].T.reshape(-1, 2)
@@ -22,7 +23,7 @@ def calibrate_camera(rows, cols, criteria = (cv2.TERM_CRITERIA_EPS+ cv2.TERM_CRI
     objpoints = [] # 3D Points
     imgpoints = [] # 2D Points
     
-    images = glob.glob('calibration_images/*.png')
+    images = glob.glob('calibration_images/*.jpg')
     print(f'Found {len(images)} images')
     
     for image in tqdm(images):
@@ -38,9 +39,10 @@ def calibrate_camera(rows, cols, criteria = (cv2.TERM_CRITERIA_EPS+ cv2.TERM_CRI
             corners2 = cv2.cornerSubPix(gray, corners, (11,11), (-1,-1), criteria)
             imgpoints.append(corners2)
 
-            #cv2.drawChessboardCorners(img, (rows, cols), corners2, ret)
-            #cv2.imshow('img', img)
-            #cv2.waitKey(1500)
+            # Draw chessboard corners and save the image to verify that work correctly
+            cv2.drawChessboardCorners(img, (rows, cols), corners2, ret)
+            cv2.imwrite(f'calibration_images/out/out{count}.jpg', img)
+            count += 1
             
     ret, mtx, dist, _, _ = cv2.calibrateCamera(objpoints, imgpoints, gray.shape[::-1], None, None)
     
