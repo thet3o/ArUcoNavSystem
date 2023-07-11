@@ -20,10 +20,11 @@ import heapq
 
 
 class Node:
-    def __init__(self, id: str, occupied: bool, weights):
+    def __init__(self, id: str, occupied: bool, weights, infos):
         self.id = id
         self.occupied = occupied
         self.weights = weights
+        self.infos = infos
         
 def dijkstra(start_node):
     distances = {node.id: float('inf') for node in graph}
@@ -45,35 +46,83 @@ def dijkstra(start_node):
                 heapq.heappush(priority_queue, (distance, neighbor))
 
     return distances
-        
-if __name__ == "__main__":
-    
-    n1 = Node("A", False, {'B': 1 })
+
+def test(start_node):
+    n1 = Node("A", False, {
+        'B': 1 
+    }, {})
     n2 = Node("B", False, {
         'A': 1,
         'C': 2
-    })
+    }, {})
     n3 = Node("C", False, {
         'B': 2,
         'E': 5,
         'F': 30,
         'D': 6
-    })
+    }, {})
     n4 = Node("D", False, {
         'C': 6,
         'G': 8
-    })
+    }, {})
     n5 = Node("E", False, {
         'C': 5
-    })
+    }, {})
     n6 = Node("F", False, {
         'C': 30,
         'G': 2
-    })
+    }, {})
     n7 = Node("G", False, {
         'F': 2,
         'D': 8
-    })
+    }, {})
+    
+    nodes = {
+        n1.id: n1,
+        n2.id: n2,
+        n3.id: n3,
+        n4.id: n4,
+        n5.id: n5,
+        n6.id: n6,
+        n7.id: n7,
+    }
+    
+    graph = [n1, n2 ,n3, n4, n5 , n6 , n7 ]
+
+    shortest_distances = dijkstra(start_node)
+    
+    return shortest_distances
+        
+if __name__ == "__main__":
+    
+    n1 = Node("A", False, {
+        'B': 1
+    }, {})
+    n2 = Node("B", False, {
+        'A': 1,
+        'C': 2
+    }, {})
+    n3 = Node("C", False, {
+        'B': 2,
+        'E': 5,
+        'F': 30,
+        'D': 6
+    }, {})
+    n4 = Node("D", False, {
+        'C': 6,
+        'G': 8
+    }, {})
+    n5 = Node("E", False, {
+        'C': 5
+    }, {})
+    n6 = Node("F", False, {
+        'C': 30,
+        'G': 2
+    }, {})
+    n7 = Node("G", False, {
+        'F': 2,
+        'D': 8
+    }, {})
     
     nodes = {
         n1.id: n1,
@@ -87,8 +136,10 @@ if __name__ == "__main__":
     
     graph = [n1, n2 ,n3, n4, n5 , n6 , n7 ]
     
-    start_node = n1
+    start_node = n7
     shortest_distances = dijkstra(start_node)
+    
+    print(shortest_distances)
     
     for node_id, distance in shortest_distances.items():
         print(f"Shortest distance from {start_node.id} to {node_id} is {distance}")

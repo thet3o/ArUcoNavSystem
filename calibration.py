@@ -66,18 +66,8 @@ if __name__ == '__main__':
         Size of checkerboard w:200 h:150
         Number of rows:9 cols:11
     '''
-    #capture_images(50)
-    #calibrate_camera(3, 3)
-    
-    with ptg.WindowManager() as manager:
-        window = (
-            ptg.Window(
-                'ArUcoNavSystem Calibrator',
-                ptg.Button('Capture', centered=True, onclick=manager.stop())
-            )
-        ).center()
-        
-        manager.add(window)
+    capture_images(50)
+    calibrate_camera(3, 3)
     
     
 

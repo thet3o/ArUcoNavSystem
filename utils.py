@@ -2,7 +2,7 @@ import cv2
 
 
 def draw_bounding_box(img, top_left, top_right, bottom_left, bottom_right):
-    cv2.line(img, top_left, top_right, (0, 255, 0), 2)
+    cv2.line(img, top_left, top_right, (255, 255, 255), 2)
     cv2.line(img, top_right, bottom_right, (0, 255, 0), 2)
     cv2.line(img, bottom_right, bottom_left, (0, 255, 0), 2)
     cv2.line(img, bottom_left, top_left, (0, 255, 0), 2)
