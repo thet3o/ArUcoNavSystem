@@ -44,7 +44,7 @@ def dijkstra(start_node):
             if distance < distances[neighbor.id]:
                 distances[neighbor.id] = distance
                 heapq.heappush(priority_queue, (distance, neighbor))
-
+                
     return distances
 
 def test(start_node):
@@ -137,6 +137,7 @@ if __name__ == "__main__":
     graph = [n1, n2 ,n3, n4, n5 , n6 , n7 ]
     
     start_node = n7
+    end_node = n1
     shortest_distances = dijkstra(start_node)
     
     print(shortest_distances)
