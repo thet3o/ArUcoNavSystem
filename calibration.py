@@ -13,6 +13,7 @@ import cv2
 import numpy as np
 import glob
 from tqdm import tqdm
+import pytermgui as ptg
 
 def calibrate_camera(rows, cols, criteria = (cv2.TERM_CRITERIA_EPS+ cv2.TERM_CRITERIA_MAX_ITER, 30, 0.001)):
     count = 0
@@ -23,7 +24,7 @@ def calibrate_camera(rows, cols, criteria = (cv2.TERM_CRITERIA_EPS+ cv2.TERM_CRI
     objpoints = [] # 3D Points
     imgpoints = [] # 2D Points
     
-    images = glob.glob('calibration_images/*.jpg')
+    images = glob.glob('calibration_images/in/*.jpg')
     print(f'Found {len(images)} images')
     
     for image in tqdm(images):
@@ -51,14 +52,32 @@ def calibrate_camera(rows, cols, criteria = (cv2.TERM_CRITERIA_EPS+ cv2.TERM_CRI
     fs.write('camera_matrix', mtx)
     fs.write('dist_coeffs', dist)
     fs.release()
+    
+def capture_images(number_of_captures):
+    cap = cv2.VideoCapture(1)
+    print('Start capture')
+    for i in range(number_of_captures):
+        _, img  = cap.read()
+        cv2.imwrite(f'calibration_images/in/calib{i}.jpg', img)
+    print('Capture ended')
 
 if __name__ == '__main__':
     '''
         Size of checkerboard w:200 h:150
         Number of rows:9 cols:11
     '''
+    #capture_images(50)
+    #calibrate_camera(3, 3)
     
-    calibrate_camera(10, 8)
+    with ptg.WindowManager() as manager:
+        window = (
+            ptg.Window(
+                'ArUcoNavSystem Calibrator',
+                ptg.Button('Capture', centered=True, onclick=manager.stop())
+            )
+        ).center()
+        
+        manager.add(window)
     
     
 
