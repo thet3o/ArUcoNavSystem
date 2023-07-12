@@ -20,11 +20,10 @@ import heapq
 
 
 class Node:
-    def __init__(self, id: str, occupied: bool, weights, infos):
+    def __init__(self, id: str, weights, occupied: bool = False):
         self.id = id
         self.occupied = occupied
         self.weights = weights
-        self.infos = infos
         
 def dijkstra(start_node):
     distances = {node.id: float('inf') for node in graph}
