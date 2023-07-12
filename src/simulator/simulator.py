@@ -12,17 +12,22 @@ import networkx as nx
 from navalgo.navalgo import Node
 import matplotlib.pyplot as plt
 
-
-def build_graph(nodes: list):
+# build graph
+def build_graph(nodes: dict, path):
     graph = nx.Graph()
-    for node in nodes:
-        graph.add_node(node.id, node=node)
-        for k, v in node.weights.items():
-            graph.add_edge(node.id, k, weight=v)
-    return graph
+    for id, val in nodes.items():
+        graph.add_node(id, node=val)
+        for k, v in val.weights.items():
+            graph.add_edge(id, k, weight=v)
+            
+    path_edges = [(path[i], path[i+1]) for i in range(len(path)-1)]
+            
+    edge_colors = ['lime' if e in path_edges else 'black' for e in graph.edges]
+    
+    return graph, edge_colors
 
-def show_graph(graph: nx.Graph):
-    nx.draw(graph, with_labels=True)
+def show_graph(graph: nx.Graph, edge_colors):
+    nx.draw(graph, with_labels=True, edge_color=edge_colors, width=2)
     plt.show()
     
 def show_moving_robot(graph, path: list):

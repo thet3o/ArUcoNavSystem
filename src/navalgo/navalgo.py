@@ -17,7 +17,8 @@ __version__ = '0.0.1'
 '''
 
 import heapq
-
+import math
+from queue import PriorityQueue
 
 class Node:
     def __init__(self, id: str, weights, occupied: bool = False):
@@ -25,26 +26,51 @@ class Node:
         self.occupied = occupied
         self.weights = weights
         
-def dijkstra(start_node):
-    distances = {node.id: float('inf') for node in graph}
-    distances[start_node.id] = 0
-    priority_queue = [(0, start_node)]
-
-    while priority_queue:
-        current_distance, current_node = heapq.heappop(priority_queue)
-
-        # Skip if a shorter path to current_node has already been found
-        if current_distance > distances[current_node.id]:
+def dijkstra(nodes, start_node, end_node):
+    distances = {node: math.inf for node in nodes}
+    distances[start_node] = 0
+    visited = set()
+    pq = PriorityQueue()
+    pq.put((0, start_node))
+    
+    # Find shortest path using dijkstra
+    while not pq.empty():
+        # find node with smallest distance
+        #min_node = min((node, distance) for node, distance in distances.items() if node not in visited)[0]
+        distance, current_node = pq.get()
+        # current node become visited
+        #visited.add(min_node)
+        
+        if current_node in visited:
             continue
-
-        for neighbor_id, weight in current_node.weights.items():
-            neighbor = nodes[neighbor_id]
-            distance = current_distance + weight
-            if distance < distances[neighbor.id]:
-                distances[neighbor.id] = distance
-                heapq.heappush(priority_queue, (distance, neighbor))
+        
+        visited.add(current_node)
+        
+        if current_node == end_node:
+            break
+        
+        # end node reached break
+        #if min_node == end_node:
+        #    break
+        
+        # update distances to neighboring nodes
+        for neighbor, weight in nodes[current_node].weights.items():
+            new_distance = distances[current_node] + weight
+            if new_distance < distances[neighbor]:
+                distances[neighbor] = new_distance
+                pq.put((new_distance, neighbor))
                 
-    return distances
+    # recreate best path
+    path = []
+    current_node = end_node
+    while current_node != start_node:
+        print(current_node)
+        path.append(current_node)
+        current_node = min(nodes[current_node].weights, key=lambda x: distances[x])
+    path.append(start_node)
+    path.reverse()
+    return path
+        
 
 def test(start_node):
     n1 = Node("A", False, {
@@ -133,11 +159,11 @@ if __name__ == "__main__":
         n7.id: n7,
     }
     
-    graph = [n1, n2 ,n3, n4, n5 , n6 , n7 ]
+    graphs = [n1, n2 ,n3, n4, n5 , n6 , n7 ]
     
     start_node = n7
     end_node = n1
-    shortest_distances = dijkstra(start_node)
+    shortest_distances = dijkstra(graphs, nodes, start_node, end_node)
     
     print(shortest_distances)
     
