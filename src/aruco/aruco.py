@@ -12,26 +12,8 @@ import math
 from utils.utils import draw_bounding_box, draw_marker_data
 import numpy as np
 
-# https://github.com/fayyazpocker/ArUco-marker-detection/blob/master/aruco_lib.py
-def angle_calculate(pt1,pt2, trigger = 0):  # function which returns angle between two points in the range of 0-359
-    angle_list_1 = list(range(359,0,-1))
-    #angle_list_1 = angle_list_1[90:] + angle_list_1[:90]
-    angle_list_2 = list(range(359,0,-1))
-    angle_list_2 = angle_list_2[-90:] + angle_list_2[:-90]
-    x=pt2[0]-pt1[0] # unpacking tuple
-    y=pt2[1]-pt1[1]
-    angle=int(math.degrees(math.atan2(y,x))) #takes 2 points nad give angle with respect to horizontal axis in range(-180,180)
-    if trigger == 0:
-        angle = angle_list_2[angle]
-    else:
-        angle = angle_list_1[angle]
-    return int(angle)
 
-
-def side_position(x, w):
-    return 'left' if x < w/2 else 'right'
-
-def estimatePose(corners, marker_size, mtx, distortion):
+def estimate_pose(corners, marker_size, mtx, distortion):
     marker_points = np.array([[-marker_size / 2, marker_size / 2, 0],
                               [marker_size / 2, marker_size / 2, 0],
                               [marker_size / 2, -marker_size / 2, 0],
@@ -49,19 +31,16 @@ def estimatePose(corners, marker_size, mtx, distortion):
     return rvecs, tvecs, trash
 
 # Checks if a matrix is a valid rotation matrix.
-def isRotationMatrix(R) :
+def is_rotation_matrix(R) :
     Rt = np.transpose(R)
     shouldBeIdentity = np.dot(Rt, R)
     I = np.identity(3, dtype = R.dtype)
     n = np.linalg.norm(I - shouldBeIdentity)
     return n < 1e-6
  
-# Calculates rotation matrix to euler angles
-# The result is the same as MATLAB except the order
-# of the euler angles ( x and z are swapped ).
-def rotationMatrixToEulerAngles(R) :
+def rotmat_to_euler(R) :
  
-    assert(isRotationMatrix(R))
+    assert(is_rotation_matrix(R))
  
     sy = math.sqrt(R[0,0] * R[0,0] +  R[1,0] * R[1,0])
  
@@ -78,6 +57,22 @@ def rotationMatrixToEulerAngles(R) :
  
     return np.array([x, y, z])
 
+
+def calculate_rotation(yaw, tvecs, final):
+    correction_angle = final
+    correction_angle -= round(yaw)
+    side = ''
+    if tvecs[0][0] < 0.08:
+        print(f'Rotate right {correction_angle} degrees')
+        side = 'left'
+        rotation_direction = 'right'
+    else:
+        print(f'Rotate left {correction_angle} degrees')
+        side = 'right'
+        rotation_direction = 'left'
+    
+    return correction_angle, side, rotation_direction
+
 def detect_marker(img, w, mtx, dist, aruco_dict = cv2.aruco.DICT_7X7_1000):
     marker_list = []
     corners, ids, _ = cv2.aruco.detectMarkers(img, cv2.aruco.Dictionary_get(aruco_dict))
@@ -91,41 +86,36 @@ def detect_marker(img, w, mtx, dist, aruco_dict = cv2.aruco.DICT_7X7_1000):
             mcorners = mcorner.reshape((4,2))
             top_left, top_right, bottom_right, bottom_left = mcorners
             
-            x = (top_left[0] + top_right[0] + bottom_right[0] + bottom_left[0]) / 4
-            y = (top_left[1] + top_right[1] + bottom_right[1] + bottom_left[1]) / 4
-            
-            side = side_position(x, w)
             
             top_left = (int(top_left[0]), int(top_left[1]))
             top_right = (int(top_right[0]), int(top_right[1]))
             bottom_left = (int(bottom_left[0]), int(bottom_left[1]))
             bottom_right = (int(bottom_right[0]), int(bottom_right[1]))
-            rotation_angle = angle_calculate(top_left, bottom_left)
             
-            ### Distance data
-            marker_size = 0.035
-            measured_distance = 0.3
-            conversion_factor = measured_distance / marker_size
+            rvecs, tvecs, _ = estimate_pose(mcorner, 0.035, mtx, dist)
             
-            #rvecs, tvecs, _ = cv2.aruco.estimatePoseSingleMarkers(mcorner, 0.035, mtx, dist)
-            
-            rvecs, tvecs, _ = estimatePose(mcorner, 0.035, mtx, dist)
-            
-            #distance = np.linalg.norm(tvecs[0][0][2])
             rmat, _ = cv2.Rodrigues(rvecs[0])
             
-            xyz = rotationMatrixToEulerAngles(rmat)
-
-            marker_data = {'id': mid[0], 'yaw': round(0)}
+            xyz = rotmat_to_euler(rmat)
+            heading_correction, side, rotation_direction = calculate_rotation(abs(math.degrees(xyz[1])), tvecs,90)
+            
+            # Data
+            distance = round(tvecs[0][2][0]*70) # unit is cm
+            yaw = round(math.degrees(xyz[1]))
+            roll = round(math.degrees(xyz[0]))
+            
+            marker_data = {'id': mid[0], 'distance': distance, 'yaw': yaw, 'roll': roll}
             marker_list.append(marker_data)
             
-            distancestr = f"Distance: {str(round(tvecs[0][2][0]*70))} cm"
-            yawstr = f"Yaw Degrees: {round(math.degrees(xyz[1]))}"
-            rollstr = f"Roll Degrees: {round(math.degrees(xyz[2]))}"
-            cv2.putText(img, distancestr, (0, 150), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
-            cv2.putText(img, yawstr, (0, 200), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
-            cv2.putText(img, rollstr, (0, 250), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
+            # Data visualization
+            distancestr = f"Distance: {distance} cm"
+            yawstr = f"Yaw Degrees: {yaw}"
+            rollstr = f"Roll Degrees: {roll}"
+            cv2.putText(img, distancestr, (0, 150), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 2, cv2.LINE_AA)
+            cv2.putText(img, yawstr, (0, 200), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 2, cv2.LINE_AA)
+            cv2.putText(img, rollstr, (0, 250), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 2, cv2.LINE_AA)
+            cv2.putText(img, f'Robot heading correction: {heading_correction} {rotation_direction}', (0, 300), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 2, cv2.LINE_AA)
             img = draw_bounding_box(img, top_left, top_right, bottom_left, bottom_right)
-            img = draw_marker_data(img, top_left, f'Roll: {rotation_angle}, Yaw: {0}, Side: {side}, Distance: {0}')
+            img = draw_marker_data(img, top_left, f'Roll: {rollstr}, Yaw: {yawstr}, Side: {side}, Distance: {distancestr}')
     return img, marker_list
             

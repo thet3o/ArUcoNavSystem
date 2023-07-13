@@ -34,14 +34,10 @@ if __name__ == '__main__':
     path_steps = len(path)
     path.reverse()
     
-    print(path)
-    print(path[path_steps-1])
-    
     running = True
     
     while running:
         ret, img = cap.read()
-        #img = cv2.imread('/Users/thet3o/Pictures/b.jpg')
         h, w, _ = img.shape
         
         img, marker_list = detect_marker(img, w, mtx, dist)
