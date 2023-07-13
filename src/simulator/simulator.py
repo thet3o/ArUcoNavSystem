@@ -9,7 +9,7 @@ __author__ = 'Matteo Vacalebri (thet3o)'
 __version__ = '0.0.1'
 
 import networkx as nx
-from navalgo.navalgo import Node
+from navigation.navigation import Node
 import matplotlib.pyplot as plt
 
 # build graph
