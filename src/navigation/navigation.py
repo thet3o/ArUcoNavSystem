@@ -6,13 +6,8 @@ __version__ = '0.0.1'
 
 import math
 from queue import PriorityQueue
+from models import Node
 
-class Node:
-    def __init__(self, id: str, weights, occupied: bool = False):
-        self.id = id
-        self.occupied = occupied
-        self.weights = weights
-        
 def dijkstra(nodes, start_node, end_node):
     distances = {node: math.inf for node in nodes}
     distances[start_node] = 0

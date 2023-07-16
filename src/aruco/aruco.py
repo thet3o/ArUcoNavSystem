@@ -73,7 +73,7 @@ def calculate_rotation(yaw, tvecs, final):
     
     return correction_angle, side, rotation_direction
 
-def detect_marker(img, w, mtx, dist, aruco_dict = cv2.aruco.DICT_7X7_1000):
+def detect_marker(img, mtx, dist, aruco_dict = cv2.aruco.DICT_7X7_1000):
     marker_list = []
     corners, ids, _ = cv2.aruco.detectMarkers(img, cv2.aruco.Dictionary_get(aruco_dict))
     criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 100, 0.0001)
@@ -91,8 +91,8 @@ def detect_marker(img, w, mtx, dist, aruco_dict = cv2.aruco.DICT_7X7_1000):
             top_right = (int(top_right[0]), int(top_right[1]))
             bottom_left = (int(bottom_left[0]), int(bottom_left[1]))
             bottom_right = (int(bottom_right[0]), int(bottom_right[1]))
-            
-            rvecs, tvecs, _ = estimate_pose(mcorner, 0.035, mtx, dist)
+            #sea 0.035
+            rvecs, tvecs, _ = estimate_pose(mcorner, 0.140, mtx, dist)
             
             rmat, _ = cv2.Rodrigues(rvecs[0])
             

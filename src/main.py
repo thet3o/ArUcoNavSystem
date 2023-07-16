@@ -19,7 +19,7 @@ if __name__ == '__main__':
     graph = [v for k, v in nodes.items()]
     #show_graph(graphd)
     show_moving_robot(graph, ['A', 'B', 'C', 'E'])
-    path = dijkstra(nodes, '0', '5')
+    path = dijkstra(nodes, '0', '4')
     print(path)
     graphd, edge_colors = build_graph(nodes, path)
     #show_graph(graphd, edge_colors)
@@ -29,34 +29,45 @@ if __name__ == '__main__':
     dist = fs.getNode('dist_coeffs').mat()
     fs.release()
     
-    cap = cv2.VideoCapture(1)
+    cap = cv2.VideoCapture(0)
+    outvideo = cv2.VideoWriter('output.avi', cv2.VideoWriter_fourcc(*'MJPG'), 30, (1280,720))
     
     path_steps = len(path)
     path.reverse()
     
     running = True
     
+    h = 0
+    w = 0
+    
     while running:
         ret, img = cap.read()
-        h, w, _ = img.shape
         
-        img, marker_list = detect_marker(img, w, mtx, dist)
-        if marker_list != []:
-            print(marker_list)
-        for marker in marker_list:
-            if str(marker['id']) == path[path_steps-1]:
-                if path_steps > 1:
-                    print(f'Node {path[path_steps-1]} passed')
-                    path_steps -= 1
-                    print(path_steps)
-                else:
-                    print(f'Node {path[path_steps-1]}, arrived to destination')
-                    running = False
-        cv2.imshow('debug', img)
+        if ret == True:
 
+            img, marker_list = detect_marker(img, mtx, dist)
+            if marker_list != []:
+                print(marker_list)
+            for marker in marker_list:
+                if str(marker['id']) == path[path_steps-1]:
+                    if path_steps > 1:
+                        print(f'Node {path[path_steps-1]} passed')
+                        path_steps -= 1
+                        print(path_steps)
+                    else:
+                        print(f'Node {path[path_steps-1]}, arrived to destination')
+                        running = False
+            outvideo.write(img)
+            cv2.imshow('debug', img)
+        else:
+            break
+        
             
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
-        
+    running = False
+    
+    
     cap.release()
+    outvideo.release()
     cv2.destroyAllWindows()
