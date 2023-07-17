@@ -21,6 +21,7 @@ def build_graph(nodes: dict, path):
             graph.add_edge(id, k, weight=v)
             
     path_edges = [(path[i], path[i+1]) for i in range(len(path)-1)]
+    
             
     edge_colors = ['lime' if e in path_edges else 'black' for e in graph.edges]
     
