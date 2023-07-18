@@ -6,7 +6,7 @@ __version__ = '0.0.1'
 
 import math
 from queue import PriorityQueue
-from models import Node
+from data.models import Node
 
 def dijkstra(nodes, start_node, end_node):
     distances = {node: math.inf for node in nodes}
@@ -18,7 +18,7 @@ def dijkstra(nodes, start_node, end_node):
     # Find shortest path using dijkstra
     while not pq.empty():
         # find node with smallest distance
-        distance, current_node = pq.get()
+        _, current_node = pq.get()
         
         if current_node in visited:
             continue

@@ -1,22 +1,33 @@
 from navigation.navigation import Node, dijkstra
-from simulator.simulator import build_graph, show_graph, show_moving_robot
+from simulator.simulator import build_graph, show_graph
 from aruco.aruco import detect_marker
 import cv2
 import imageio
+from data.database import Database
+import time
+
+INSERT_DB = False
 
 
 if __name__ == '__main__':
-    nodes = {
-        '0': Node('0', {'1': 1}),
-        '1': Node('1', {'0': 1,'3': 2}),
-        '3': Node('3', {'1': 2,'4': 5,'5': 1}),
-        '4': Node('4', {'3': 5}),
-        '5': Node('5', {'3': 1,'6': 2}),
-        '6': Node('6', {'5': 2,'3': 8}),
-    }
+    db = Database('sqlite:///database.sqlite')
+    
+    nodes_to_insert = [
+        Node('0', {'1': 1}),
+        Node('1', {'0': 1,'3': 2}),
+        Node('3', {'1': 2,'4': 5,'5': 1}),
+        Node('4', {'3': 5}),
+        Node('5', {'3': 1,'6': 2}),
+        Node('6', {'5': 2,'3': 8}),
+    ]
+    
+    if INSERT_DB:
+        db.create_nodes(nodes_to_insert)
+        
+    nodes = db.get_nodes()
+        
     #print(graphd.edges)
     graph = [v for k, v in nodes.items()]
-    show_moving_robot(graph, ['A', 'B', 'C', 'E'])
     path = dijkstra(nodes, '0', '4')
     print(path)
     graphd, edge_colors = build_graph(nodes, path)
@@ -43,6 +54,9 @@ if __name__ == '__main__':
     current_node = ''
     next_node = path[-1]
     running = True
+    
+    for k,v in nodes.items():
+        db.update_node(k, occupied=False)
 
     while True:
         ret, img = cap.read()
@@ -58,10 +72,15 @@ if __name__ == '__main__':
             if str(marker['id']) == path[path_steps-1]:
                 if path_steps > 1:
                     current_node = path[path_steps-1]
+                    if path_steps < len(path):
+                        db.update_node(path[path_steps], occupied=False)
+                    db.update_node(current_node, occupied=True)
                     path_steps -= 1
                     print(f'next step {path_steps}')
                     next_node = path[path_steps-1] if path_steps != 1 else  f'{path[path_steps-1]} destination'
                 else:
+                    db.update_node(current_node, occupied=True)
+                    time.sleep(0.5)
                     current_node = 'Arrived'
                     next_node = ''
                     running = False
@@ -83,7 +102,7 @@ if __name__ == '__main__':
             
         if cv2.waitKey(30) & 0xFF == ord('q'):
             break
-    
+        
     wrt.close()
     cap.release()
     cv2.destroyAllWindows()

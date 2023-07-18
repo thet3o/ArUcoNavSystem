@@ -33,9 +33,9 @@ def estimate_pose(corners, marker_size, mtx, distortion):
 # Checks if a matrix is a valid rotation matrix.
 def is_rotation_matrix(R) :
     Rt = np.transpose(R)
-    shouldBeIdentity = np.dot(Rt, R)
+    should_be_identity = np.dot(Rt, R)
     I = np.identity(3, dtype = R.dtype)
-    n = np.linalg.norm(I - shouldBeIdentity)
+    n = np.linalg.norm(I - should_be_identity)
     return n < 1e-6
  
 def rotmat_to_euler(R) :

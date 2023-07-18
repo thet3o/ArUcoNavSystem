@@ -30,12 +30,3 @@ def build_graph(nodes: dict, path):
 def show_graph(graph: nx.Graph, edge_colors):
     nx.draw(graph, with_labels=True, edge_color=edge_colors, width=2)
     plt.show()
-    
-def show_moving_robot(graph, path: list):
-    
-    current_node = 'A'
-    
-    while current_node != path[-1]:
-        next_node_index = (path.index(current_node)+1)
-        print(f'Moving from {current_node} to {path[next_node_index]}')
-        current_node = path[next_node_index]

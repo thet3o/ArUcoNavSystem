@@ -1,0 +1,23 @@
+"filename", "language", "Python", "XML", "Markdown", "pip requirements", "comment", "blank", "total"
+"/Users/thet3o/Documents/Projects.nosync/ArUcoNavSystem/README.md", "Markdown", 0, 0, 9, 0, 0, 4, 13
+"/Users/thet3o/Documents/Projects.nosync/ArUcoNavSystem/calibration_data.xml", "XML", 0, 19, 0, 0, 0, 1, 20
+"/Users/thet3o/Documents/Projects.nosync/ArUcoNavSystem/requirements.txt", "pip requirements", 0, 0, 0, 3, 0, 1, 4
+"/Users/thet3o/Documents/Projects.nosync/ArUcoNavSystem/src/aruco/__init__.py", "Python", 0, 0, 0, 0, 0, 1, 1
+"/Users/thet3o/Documents/Projects.nosync/ArUcoNavSystem/src/aruco/aruco.py", "Python", 100, 0, 0, 0, 14, 29, 143
+"/Users/thet3o/Documents/Projects.nosync/ArUcoNavSystem/src/calibration/__init__.py", "Python", 0, 0, 0, 0, 0, 1, 1
+"/Users/thet3o/Documents/Projects.nosync/ArUcoNavSystem/src/calibration/calibration.py", "Python", 69, 0, 0, 0, 12, 25, 106
+"/Users/thet3o/Documents/Projects.nosync/ArUcoNavSystem/src/calibration/interface.py", "Python", 11, 0, 0, 0, 0, 5, 16
+"/Users/thet3o/Documents/Projects.nosync/ArUcoNavSystem/src/main.py", "Python", 66, 0, 0, 0, 3, 20, 89
+"/Users/thet3o/Documents/Projects.nosync/ArUcoNavSystem/src/map/__init__.py", "Python", 0, 0, 0, 0, 0, 1, 1
+"/Users/thet3o/Documents/Projects.nosync/ArUcoNavSystem/src/map/map.py", "Python", 0, 0, 0, 0, 0, 1, 1
+"/Users/thet3o/Documents/Projects.nosync/ArUcoNavSystem/src/models.py", "Python", 9, 0, 0, 0, 0, 2, 11
+"/Users/thet3o/Documents/Projects.nosync/ArUcoNavSystem/src/navigation/__init__.py", "Python", 0, 0, 0, 0, 0, 1, 1
+"/Users/thet3o/Documents/Projects.nosync/ArUcoNavSystem/src/navigation/navigation.py", "Python", 31, 0, 0, 0, 8, 9, 48
+"/Users/thet3o/Documents/Projects.nosync/ArUcoNavSystem/src/navigation/test.py", "Python", 26, 0, 0, 0, 1, 9, 36
+"/Users/thet3o/Documents/Projects.nosync/ArUcoNavSystem/src/simulator/__init__.py", "Python", 0, 0, 0, 0, 0, 1, 1
+"/Users/thet3o/Documents/Projects.nosync/ArUcoNavSystem/src/simulator/simulator.py", "Python", 23, 0, 0, 0, 7, 11, 41
+"/Users/thet3o/Documents/Projects.nosync/ArUcoNavSystem/src/utils/__init__.py", "Python", 0, 0, 0, 0, 0, 1, 1
+"/Users/thet3o/Documents/Projects.nosync/ArUcoNavSystem/src/utils/utils.py", "Python", 16, 0, 0, 0, 0, 4, 20
+"/Users/thet3o/Documents/Projects.nosync/ArUcoNavSystem/test/__init__.py", "Python", 5, 0, 0, 0, 0, 1, 6
+"/Users/thet3o/Documents/Projects.nosync/ArUcoNavSystem/test/nav_test.py", "Python", 16, 0, 0, 0, 0, 3, 19
+"Total", "-", 372, 19, 9, 3, 45, 131, 579
