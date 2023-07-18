@@ -1,3 +1,11 @@
+"""Utils module
+
+Generic utility function like for drawing on frame
+
+"""
+
+__author__ = "Matteo Vacalebri (thet3o)"
+
 import cv2
 
 

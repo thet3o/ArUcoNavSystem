@@ -1,35 +1,17 @@
-import sqlite3
+"""Database module for ArUcoNavSystem
+
+    This is the module to manage nodes data in sqlite db
+
+"""
+
+__author__ = 'Matteo Vacalebri (thet3o)'
+__version__ = '0.0.1'
+
 from sqlalchemy import create_engine, Table, Column, Integer, String, Boolean, MetaData, JSON
-
-
-'''connection = sqlite3.connect('database.sqlite')
-
-print(connection.total_changes)
-
-cursor = connection.cursor()
-
-#cursor.execute("CREATE TABLE nodes (id INTEGER PRIMARY KEY, weights JSON DEFAULT('[]'), occupied BOOLEAN, infos JSON DEFAULT('[]'))")
-
-cursor.execute('INSERT INTO nodes VALUES (3, \'{\"1\": 2,\"4\": 5,\"5\": 1}\', 0, \'{\"test\": \"left\"}\')')
-
-connection.commit()'''
-
 from .models import Node, NodeInDB
 import json
 from sqlalchemy.orm import sessionmaker
 
-#"sqlite:///database.sqlite"
-
-'''class Node:
-    def __init__(self, id: str, weights: dict, occupied: bool = False, infos: dict = None):
-        self.id = id
-        self.weights = weights
-        self.occupied = occupied
-        self.infos = {} if infos is None else infos
-        
-    def __str__(self) -> str:
-        return json.dumps(self.__dict__)
-'''
 
 class Database:
     def __init__(self, db_path: str):
@@ -37,7 +19,7 @@ class Database:
         self.session = sessionmaker(bind=engine)()
         
     def create_node(self, node: Node):
-        node.infos = json.dumps(node.infos)
+        node.infos = None
         self.session.add(node)
     
     def create_node(self, nodes: list):
@@ -61,15 +43,4 @@ class Database:
         
     def delete_node(self, node: Node):
         return self.session.delete(node)
-        
-        
     
-if __name__ == "__main__":
-    
-    db = Database('sqlite:///database.sqlite')
-    
-    node = Node(5, {'3': 5, '2':6})
-
-    db.delete_node(node)
-    nodes = db.read_nodes()
-    print(db.get_nodes())

@@ -1,4 +1,7 @@
-"""Navigation Alogorithm Module
+"""Navigation ALgorithm Module
+
+This is the navigation algorithm module based on Dijkstra Algorithm
+
 """
 
 __author__ = 'Matteo Vacalebri (thet3o)'
@@ -32,7 +35,7 @@ def dijkstra(nodes, start_node, end_node):
         
         # update distances to neighboring nodes
         for neighbor, weight in nodes[current_node].weights.items():
-            new_distance = distances[current_node] + weight
+            new_distance = distances[current_node] + int(weight)
             if new_distance < distances[neighbor]:
                 distances[neighbor] = new_distance
                 pq.put((new_distance, neighbor))
@@ -42,6 +45,7 @@ def dijkstra(nodes, start_node, end_node):
     current_node = end_node
     while current_node != start_node:
         path.append(current_node)
+        print(current_node)
         current_node = min(nodes[current_node].weights, key=lambda x: distances[x])
     path.append(start_node)
     path.reverse()

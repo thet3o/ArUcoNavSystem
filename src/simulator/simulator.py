@@ -1,7 +1,6 @@
 """Simulator module
 
-This is the simulator module where every function written here is used to simulate,
-or move in the real world the robot
+This is the simulator module where the graph of the path is visualized
 
 """
 

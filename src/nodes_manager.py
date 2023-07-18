@@ -1,15 +1,21 @@
+"""Nodes Manager
+
+This is a small interface to interact with the nodes storage(sqlite db)
+
+"""
+
+__author__ = 'Matteo Vacalebri (thet3o)'
+__version__ = '0.0.1'
+
 import PySimpleGUI as pyg
-
 from data.database import Database
-from data.models import Node, NodeInDB
-
+from data.models import NodeInDB
 db = Database('sqlite:///database.sqlite')
 nodes = [v for k, v in db.get_nodes().items()]
 weights = {}
 nodes_list_layout = [
     [
         pyg.Text('Node Id'),
-        #pyg.Button('Search', key='-BTN NODE SEARCH-', enable_events=True)
     ],
     [
         pyg.Listbox(
@@ -101,7 +107,7 @@ while True:
         window.Element('OCCUPIED FIELD').Update(False)
     elif event == 'ADD NODE':
         id_field = len(nodes) - 1
-        new_node = NodeInDB(id=values['ID FIELD'],weights={},occupied=values['OCCUPIED FIELD'], infos={})
+        new_node = NodeInDB(id=values['ID FIELD'],weights=json.,occupied=values['OCCUPIED FIELD'], infos={})
         nodes.append(new_node)
         db.create_node([new_node])
         window.Element('-NODES LIST-').Update([node.id for node in nodes])

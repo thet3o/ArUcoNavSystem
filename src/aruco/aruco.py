@@ -1,6 +1,7 @@
 """ArUco module for ArUcoNavSystem
 
 This module is needed to detect, get position and data from the ArUco marker.
+The calibration is needed to permit a correct estimation of rotation and transformation vectors.
 
 """
 

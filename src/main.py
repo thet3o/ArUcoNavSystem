@@ -1,3 +1,12 @@
+"""Main
+
+This is the main script of the entire program where everything starts here
+
+"""
+
+__author__ = 'Matteo Vacalebri (thet3o)'
+__version__ = '0.0.1'
+
 from navigation.navigation import Node, dijkstra
 from simulator.simulator import build_graph, show_graph
 from aruco.aruco import detect_marker
@@ -11,22 +20,11 @@ INSERT_DB = False
 
 if __name__ == '__main__':
     db = Database('sqlite:///database.sqlite')
-    
-    nodes_to_insert = [
-        Node('0', {'1': 1}),
-        Node('1', {'0': 1,'3': 2}),
-        Node('3', {'1': 2,'4': 5,'5': 1}),
-        Node('4', {'3': 5}),
-        Node('5', {'3': 1,'6': 2}),
-        Node('6', {'5': 2,'3': 8}),
-    ]
-    
-    if INSERT_DB:
-        db.create_nodes(nodes_to_insert)
         
     nodes = db.get_nodes()
+    
+    print(nodes)
         
-    #print(graphd.edges)
     graph = [v for k, v in nodes.items()]
     path = dijkstra(nodes, '0', '4')
     print(path)
@@ -86,7 +84,7 @@ if __name__ == '__main__':
                     running = False
                     
                     
-        cv2.putText(img, f'Current Node: ', (0, height-150), cv2.FONT_HERSHEY_SIMPLEX, 1.1, (0,0,0), 3)
+        cv2.putText(img, 'Current Node: ', (0, height-150), cv2.FONT_HERSHEY_SIMPLEX, 1.1, (0,0,0), 3)
         cv2.putText(img, current_node, (300, height-150), cv2.FONT_HERSHEY_SIMPLEX, 2, (0,255,255), 3)
         cv2.putText(img, 'Next node in path: ', (0, height-100), cv2.FONT_HERSHEY_SIMPLEX, 1.1, (0, 0, 0), 3)
         

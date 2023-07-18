@@ -1,5 +1,13 @@
+"""Models file
+
+This is the file where the models for the software are stored
+
+"""
+
+__author__ = 'Matteo Vacalebri (thet3o)'
+__version__ = '0.0.1'
+
 import json
-from json import JSONEncoder, JSONDecoder
 from sqlalchemy import Column, Integer, JSON, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 
