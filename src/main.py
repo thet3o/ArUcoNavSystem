@@ -7,13 +7,6 @@ This is the main script of the entire program where everything starts here
 __author__ = 'Matteo Vacalebri (thet3o)'
 __version__ = '0.0.1'
 
-from navigation.navigation import Node, dijkstra
-from simulator.simulator import build_graph, show_graph
-from aruco.aruco import detect_marker
-import cv2
-import imageio
-from data.database import Database
-import time
 import streamlit.web.bootstrap
 
 INSERT_DB = False
