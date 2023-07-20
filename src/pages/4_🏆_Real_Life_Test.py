@@ -11,7 +11,8 @@ st.set_page_config(
     layout='centered'
 )
 
-video_file = open('../output_best.mp4', 'rb')
-video_bytes = video_file.read()
-
-st.video(video_bytes)
+#video_file = open('../output_best.mp4', 'rb')
+#video_bytes = video_file.read()
+#
+#st.video(video_bytes)
+st.video('https://youtu.be/pxBZZHKUxTk')

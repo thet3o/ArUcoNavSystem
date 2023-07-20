@@ -19,7 +19,6 @@ class Node:
         self.occupied = occupied
         self.infos = {} if infos is None else infos
         
-<<<<<<< HEAD
     def to_json(self):
         return {
             'id': self.id,
@@ -28,8 +27,6 @@ class Node:
             'infos': self.infos,
         }
         
-=======
->>>>>>> 8e63e94864d7ec8dfd187c3ebf152a54c21ab442
     def __str__(self) -> str:
         return json.dumps(self.__dict__)
     
