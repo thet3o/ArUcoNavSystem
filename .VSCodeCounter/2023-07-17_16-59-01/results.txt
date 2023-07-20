@@ -1,0 +1,58 @@
+Date : 2023-07-17 16:59:01
+Directory : /Users/thet3o/Documents/Projects.nosync/ArUcoNavSystem
+Total : 21 files,  403 codes, 45 comments, 131 blanks, all 579 lines
+
+Languages
++------------------+------------+------------+------------+------------+------------+
+| language         | files      | code       | comment    | blank      | total      |
++------------------+------------+------------+------------+------------+------------+
+| Python           |         18 |        372 |         45 |        125 |        542 |
+| XML              |          1 |         19 |          0 |          1 |         20 |
+| Markdown         |          1 |          9 |          0 |          4 |         13 |
+| pip requirements |          1 |          3 |          0 |          1 |          4 |
++------------------+------------+------------+------------+------------+------------+
+
+Directories
++---------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                  | files      | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                     |         21 |        403 |         45 |        131 |        579 |
+| . (Files)                                                                             |          3 |         31 |          0 |          6 |         37 |
+| src                                                                                   |         16 |        351 |         45 |        121 |        517 |
+| src (Files)                                                                           |          2 |         75 |          3 |         22 |        100 |
+| src/aruco                                                                             |          2 |        100 |         14 |         30 |        144 |
+| src/calibration                                                                       |          3 |         80 |         12 |         31 |        123 |
+| src/map                                                                               |          2 |          0 |          0 |          2 |          2 |
+| src/navigation                                                                        |          3 |         57 |          9 |         19 |         85 |
+| src/simulator                                                                         |          2 |         23 |          7 |         12 |         42 |
+| src/utils                                                                             |          2 |         16 |          0 |          5 |         21 |
+| test                                                                                  |          2 |         21 |          0 |          4 |         25 |
++---------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++---------------------------------------------------------------------------------------+------------------+------------+------------+------------+------------+
+| filename                                                                              | language         | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------+------------------+------------+------------+------------+------------+
+| /Users/thet3o/Documents/Projects.nosync/ArUcoNavSystem/README.md                      | Markdown         |          9 |          0 |          4 |         13 |
+| /Users/thet3o/Documents/Projects.nosync/ArUcoNavSystem/calibration_data.xml           | XML              |         19 |          0 |          1 |         20 |
+| /Users/thet3o/Documents/Projects.nosync/ArUcoNavSystem/requirements.txt               | pip requirements |          3 |          0 |          1 |          4 |
+| /Users/thet3o/Documents/Projects.nosync/ArUcoNavSystem/src/aruco/__init__.py          | Python           |          0 |          0 |          1 |          1 |
+| /Users/thet3o/Documents/Projects.nosync/ArUcoNavSystem/src/aruco/aruco.py             | Python           |        100 |         14 |         29 |        143 |
+| /Users/thet3o/Documents/Projects.nosync/ArUcoNavSystem/src/calibration/__init__.py    | Python           |          0 |          0 |          1 |          1 |
+| /Users/thet3o/Documents/Projects.nosync/ArUcoNavSystem/src/calibration/calibration.py | Python           |         69 |         12 |         25 |        106 |
+| /Users/thet3o/Documents/Projects.nosync/ArUcoNavSystem/src/calibration/interface.py   | Python           |         11 |          0 |          5 |         16 |
+| /Users/thet3o/Documents/Projects.nosync/ArUcoNavSystem/src/main.py                    | Python           |         66 |          3 |         20 |         89 |
+| /Users/thet3o/Documents/Projects.nosync/ArUcoNavSystem/src/map/__init__.py            | Python           |          0 |          0 |          1 |          1 |
+| /Users/thet3o/Documents/Projects.nosync/ArUcoNavSystem/src/map/map.py                 | Python           |          0 |          0 |          1 |          1 |
+| /Users/thet3o/Documents/Projects.nosync/ArUcoNavSystem/src/models.py                  | Python           |          9 |          0 |          2 |         11 |
+| /Users/thet3o/Documents/Projects.nosync/ArUcoNavSystem/src/navigation/__init__.py     | Python           |          0 |          0 |          1 |          1 |
+| /Users/thet3o/Documents/Projects.nosync/ArUcoNavSystem/src/navigation/navigation.py   | Python           |         31 |          8 |          9 |         48 |
+| /Users/thet3o/Documents/Projects.nosync/ArUcoNavSystem/src/navigation/test.py         | Python           |         26 |          1 |          9 |         36 |
+| /Users/thet3o/Documents/Projects.nosync/ArUcoNavSystem/src/simulator/__init__.py      | Python           |          0 |          0 |          1 |          1 |
+| /Users/thet3o/Documents/Projects.nosync/ArUcoNavSystem/src/simulator/simulator.py     | Python           |         23 |          7 |         11 |         41 |
+| /Users/thet3o/Documents/Projects.nosync/ArUcoNavSystem/src/utils/__init__.py          | Python           |          0 |          0 |          1 |          1 |
+| /Users/thet3o/Documents/Projects.nosync/ArUcoNavSystem/src/utils/utils.py             | Python           |         16 |          0 |          4 |         20 |
+| /Users/thet3o/Documents/Projects.nosync/ArUcoNavSystem/test/__init__.py               | Python           |          5 |          0 |          1 |          6 |
+| /Users/thet3o/Documents/Projects.nosync/ArUcoNavSystem/test/nav_test.py               | Python           |         16 |          0 |          3 |         19 |
+| Total                                                                                 |                  |        403 |         45 |        131 |        579 |
++---------------------------------------------------------------------------------------+------------------+------------+------------+------------+------------+
