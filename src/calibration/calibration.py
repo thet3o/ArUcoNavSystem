@@ -13,10 +13,6 @@ import cv2
 import numpy as np
 import glob
 from tqdm import tqdm
-<<<<<<< HEAD
-=======
-import pytermgui as ptg
->>>>>>> 8e63e94864d7ec8dfd187c3ebf152a54c21ab442
 
 
 aruco_dict = cv2.aruco.Dictionary_get(cv2.aruco.DICT_7X7_1000)
@@ -54,13 +50,8 @@ def read_charuco(images):
     criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 100, 0.00001)
     
     for image in images:
-<<<<<<< HEAD
         #img = cv2.imread(image)
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-=======
-        img = cv2.imread(image)
-        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
->>>>>>> 8e63e94864d7ec8dfd187c3ebf152a54c21ab442
         corners, ids, _ = cv2.aruco.detectMarkers(gray, aruco_dict)
         
         if len(corners) > 0:
