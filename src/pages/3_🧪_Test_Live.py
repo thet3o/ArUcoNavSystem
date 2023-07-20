@@ -1,7 +1,7 @@
 import streamlit as st
 from aruco.aruco import detect_marker
 import numpy as np
-from streamlit_webrtc import webrtc_streamer
+from streamlit_webrtc import webrtc_streamer, RTCConfiguration
 import streamlit as st
 import cv2
 import av
@@ -16,11 +16,23 @@ mtx = fs.getNode('camera_matrix').mat()
 dist = fs.getNode('dist_coeffs').mat()
 fs.release()
 
-
-def video_callback(frame):
-    img = frame.to_ndarray(format='bgr24')
-    out, _ = detect_marker(img, mtx, dist)
+class VideoProcessor:
+    def recv(self, frame):
+        img = frame.to_ndarray(format='bgr24')
+        out, _ = detect_marker(img, mtx, dist)
     
-    return av.VideoFrame.from_ndarray(out, format="bgr24")
+        return av.VideoFrame.from_ndarray(out, format="bgr24")
 
-webrtc_streamer(key='cam', video_frame_callback=video_callback, video_receiver_size=100)
+#def video_callback(frame):
+#    img = frame.to_ndarray(format='bgr24')
+#    out, _ = detect_marker(img, mtx, dist)
+#    
+#    return av.VideoFrame.from_ndarray(out, format="bgr24")
+
+RTC_CONFIGURATION = RTCConfiguration(
+    {"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]}
+)
+
+
+webrtc_streamer(key='cam', video_processor_factory=VideoProcessor, rtc_configuration=RTC_CONFIGURATION,
+                async_processing=True, media_stream_constraints={"video": True, "audio": False},)
